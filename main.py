@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from matplotlib import colors as matColours
 
-
 class tree_node:
 
   def __init__(self, value=None, attr=None, l_branch=None, r_branch=None):
@@ -11,7 +10,6 @@ class tree_node:
     self.attr = attr
     self.l_branch = l_branch
     self.r_branch = r_branch
-
 
 class decision_tree:
 
@@ -47,11 +45,7 @@ class decision_tree:
 
     return 0
 
-  def clean_classification(
-      self, dataset
-  ):  # If the dataset contains only samples from the same room return the room numbers, else return -1
-    # if len(dataset) == 0:
-    #   return -2
+  def clean_classification(self, dataset):  # If the dataset contains only samples from the same room return the room numbers, else return -1
     first_room = dataset[0][-1]
     for row in dataset:
       if row[-1] != first_room:
@@ -59,22 +53,7 @@ class decision_tree:
 
     return first_room
 
-  def split_dataset_by_attr(self, dataset, split_attribute, split_value):
-    l_dataset = []
-    r_dataset = []
-    for row in dataset:
-      if row[split_attribute] <= split_value:
-        l_dataset.append(row)
-      else:
-        r_dataset.append(row)
-
-    return (np.array(l_dataset), np.array(r_dataset))
-
-  #def find_split(self, dataset):
-  #return (split_value, split_attribute)
-
   def entropy(self, data):
-
     # Want to find the probability of each label, rather than relative frequency
     # because it is a multivalued class
     entropy = 0
@@ -101,10 +80,8 @@ class decision_tree:
     gain = H_S - remainder
     return gain
 
-  # We split on the attribue, value so split = [attr, val]
 
-  def splitDataset(self, data, splitValue):
-
+  def splitDataset(self, data, splitValue):                   # We split on the attribue, value so split = [attr, val]
     orderedData = data[data[:, splitValue[0]].argsort()]
     leftDataset = orderedData[orderedData[:, splitValue[0]] <= splitValue[1]]
     rightDataset = orderedData[orderedData[:, splitValue[0]] > splitValue[1]]
@@ -122,7 +99,6 @@ class decision_tree:
           value = ordered[row - 1, attr]
           split = [attr, value]
           leftDataset, rightDataset = self.splitDataset(data, split)
-
           gain = self.infGain(ordered, leftDataset, rightDataset)
 
           if gain > maxInfGain:
@@ -137,19 +113,9 @@ class decision_tree:
     if room_num != -1:
       return tree_node(None, room_num, None, None), depth
     else:
-      split = self.findSplit(
-          dataset
-      )  # Assuming here that I'm going to receive a list containing the split value and the attribute to be split
+      split = self.findSplit(dataset)  # Assuming here that I'm going to receive a list containing the split value and the attribute to be split
       # findSplit() returns [Class, Attribute]
-      # print("Full Dataset")
-      # print(dataset)
-      l_dataset, r_dataset = self.split_dataset_by_attr(
-          dataset, split[0], split[1])
-      # print("Left Dataset")
-      # print(l_dataset)
-      # print("Right Dataset")
-      # print(r_dataset)
-      # print(split)
+      l_dataset, r_dataset = self.splitDataset(dataset, split)
       l_branch, l_depth = self.decision_tree_learning(l_dataset, depth + 1)
       r_branch, r_depth = self.decision_tree_learning(r_dataset, depth + 1)
       new_node = tree_node(split[1], split[0], l_branch, r_branch)
@@ -161,10 +127,7 @@ class decision_tree:
       self.check_nodes(node.l_branch, nodes_present, (node_number<<1)+1, depth+1)
       self.check_nodes(node.r_branch, nodes_present, (node_number<<1)+2, depth+1)
 
-  def plot_nodes(self, node, x, y, dx, dy, 
-                 segments, line_colour_index, colour,
-                 depth, dimensions, 
-                 nodes_present, node_number):
+  def plot_nodes(self, node, x, y, dx, dy, segments, line_colour_index, colour, depth, dimensions, nodes_present, node_number):
 
     dimensions[0] = max(dimensions[0], depth)
     dimensions[1] = min(dimensions[1], x)
@@ -174,20 +137,15 @@ class decision_tree:
       left_x, left_y = x - dx, y - dy
       right_x, right_y = x + dx, y - dy
 
-      # tbh this aint great. Keep dx // 2
       if node_number-1 not in nodes_present and node_number != (1<<depth)-1:
         left_x -= dx//2
         left_dx = dx
-        # left_x -= dx if node_number-2 not in nodes_present else dx//2
-        # left_dx = 1.3*dx if node_number-2 not in nodes_present else dx
       else:
         left_dx = dx//2
 
       if node_number+1 not in nodes_present and node_number != (1<<depth+1)-2:
         right_x += dx//2
         right_dx = dx
-        # right_x += dx if node_number+2 not in nodes_present else dx//2
-        # right_dx = 1.3*dx if node_number+2 not in nodes_present else dx
       else:
         right_dx = dx//2
 
@@ -280,8 +238,6 @@ class decision_tree:
     for i in range(len(self.test_set)):
       num_true = int(self.test_set[i][-1] - 1)
       num_predicted = int(self.predictions[i] - 1)
-      # print("num-true", num_true)
-      # print("num_pred", num_predicted)
       matrix[num_true][num_predicted] += 1
     return matrix
 
@@ -298,8 +254,7 @@ class decision_tree:
       False_Negatives = sum(matrix[i, :]) - True_Positives
       True_Negatives = np.sum(matrix) - True_Positives - False_Positives - False_Negatives  # True Negatives are classes that are correctly predicted not to be i
 
-      Accuracy = (True_Positives + True_Negatives) / (
-          True_Negatives + True_Positives + False_Positives + False_Negatives)
+      Accuracy = (True_Positives + True_Negatives) / (True_Negatives + True_Positives + False_Positives + False_Negatives)
       Precision = True_Positives / (True_Positives + False_Positives)
       Recall = True_Positives / (True_Positives + False_Negatives)
       F1 = 2 * ((Precision * Recall) / (Precision + Recall))
@@ -317,8 +272,6 @@ class decision_tree:
     return (average_accuracy, average_precision, average_recall, average_f1)
 
   def evaluate(self):
-    # test set is self.test_set
-    # prediction set is self.predictions
     conf_matrix = self.confusion_matrix()
     accuracy, precision, recall, f1 = self.evaluation_metrics(conf_matrix)
     return (accuracy, precision, recall, f1)
@@ -342,7 +295,6 @@ if __name__ == "__main__":
     f1_scores.append(f1)
     print(accuracy, precision, recall, f1)
     if i == 9:
-      # run the following and just give plot_decision_tree() the starting node
       print("plotting...")
       plt.figure(figsize=(15, 5))
       tree.plot_decision_tree(tree.decision_tree)
