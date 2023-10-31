@@ -17,8 +17,7 @@ class decision_tree:
     self.decision_tree = tree_node()
 
     if dataset == 'clean':
-      self.data = np.loadtxt("wifi_db/clean_dataset.txt"
-                             )  # This loads the file into a 2000x8 array
+      self.data = np.loadtxt("wifi_db/clean_dataset.txt")  # This loads the file into a 2000x8 array
     elif dataset == 'noisy':
       self.data = np.loadtxt("wifi_db/noisy_dataset.txt")
     else:
