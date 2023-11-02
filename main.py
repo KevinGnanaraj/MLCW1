@@ -294,6 +294,7 @@ if __name__ == "__main__":
   precision_scores = []
   recall_scores = []
   f1_scores = []
+
   for i in range(10):
     print("Starting loop " + str(i) + ":")
     tree = decision_tree()
@@ -301,23 +302,28 @@ if __name__ == "__main__":
     tree.decision_tree, depth = tree.decision_tree_learning(tree.train_set, depth=0)
     tree.predict(tree.decision_tree)
     accuracy, precision, recall, f1 = tree.evaluate()
+
     accuracy_scores.append(accuracy)
     precision_scores.append(precision)
     recall_scores.append(recall)
     f1_scores.append(f1)
+
     print("Accuracy score", accuracy)
     print("Precision score:", precision)
     print("Recall score:", recall)
     print("F1 score:", f1)
+
     if i == 9:
       print("Plotting...")
       plt.figure(figsize=(15, 5))
       tree.plot_decision_tree(tree.decision_tree)
       print("Plot complete")
+
   acc_average = round(np.mean(accuracy_scores), 3)
   prec_average = round(np.mean(precision_scores), 3)
   recall_average = round(np.mean(recall_scores), 3)
   f1_average = round(np.mean(f1_scores), 3)
+  
   print("Accuracy Macro-Average:", acc_average)
   print("Precision Macro-Average:", prec_average)
   print("Recall Macro-Average:", recall_average)
