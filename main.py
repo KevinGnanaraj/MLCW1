@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from matplotlib import colors as matColours
 import sys
-from colorama import Fore
 
 class tree_node:
 
@@ -283,7 +282,7 @@ class decision_tree:
 if __name__ == "__main__":
   if len(sys.argv) == 2:
     if sys.argv[1] == 'c':
-      print(Fore.Green + "Using clean dataset")
+      print("Using clean dataset")
     elif sys.argv[1] == 'n':
       print("Using noisy dataset")
     else:
