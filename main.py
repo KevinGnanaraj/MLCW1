@@ -324,7 +324,7 @@ if __name__ == "__main__":
   recall_average = round(np.mean(recall_scores), 3)
   f1_average = round(np.mean(f1_scores), 3)
 
-  print("Accuracy Macro-Average:", acc_average)
-  print("Precision Macro-Average:", prec_average)
-  print("Recall Macro-Average:", recall_average)
-  print("F1 Macro-Average:", f1_average)
+  print("Macro-Averaged Accuracy:", acc_average)
+  print("Macro-Averaged Precision:", prec_average)
+  print("Macro-Averaged Recall:", recall_average)
+  print("Macro-Averaged F1:", f1_average)
