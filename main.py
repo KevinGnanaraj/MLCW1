@@ -17,7 +17,7 @@ class decision_tree:
   def __init__(self):
     self.decision_tree = tree_node()
 
-    if sys.argv[1]:
+    if len(sys.argv[1]) == 2:
       if sys.argv[1] == 'c':
         print("Using clean dataset")
         self.data = np.loadtxt("wifi_db/clean_dataset.txt")
