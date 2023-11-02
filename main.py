@@ -206,7 +206,7 @@ class decision_tree:
                                    linewidths=1,
                                    colors=line_colours,
                                    linestyle='solid')
-    print(dimensions[0])
+    print("Maximum Tree Depth is:", dimensions[0])
     plt.xlim(dimensions[1]-15, dimensions[2]+15)
     plt.ylim(-dimensions[0] * dy-2, 0+2)
     plt.axis('off')  # Hide axes
@@ -295,7 +295,7 @@ if __name__ == "__main__":
   recall_scores = []
   f1_scores = []
   for i in range(10):
-    print("Starting loop " + str(i))
+    print("Starting loop " + str(i) + ":")
     tree = decision_tree()
     tree.train_test_split(i)
     tree.decision_tree, depth = tree.decision_tree_learning(tree.train_set, depth=0)
@@ -305,14 +305,20 @@ if __name__ == "__main__":
     precision_scores.append(precision)
     recall_scores.append(recall)
     f1_scores.append(f1)
-    print(accuracy, precision, recall, f1)
+    print("Accuracy score", accuracy)
+    print("Precision score:", precision)
+    print("Recall score:", recall)
+    print("F1 score:", f1)
     if i == 9:
-      print("plotting...")
+      print("Plotting...")
       plt.figure(figsize=(15, 5))
       tree.plot_decision_tree(tree.decision_tree)
-      print("plot complete")
-  acc_average = np.mean(accuracy_scores)
-  prec_average = np.mean(precision_scores)
-  recall_average = np.mean(recall_scores)
-  f1_average = np.mean(f1_scores)
-  print(acc_average, prec_average, recall_average, f1_average)
+      print("Plot complete")
+  acc_average = round(np.mean(accuracy_scores), 3)
+  prec_average = round(np.mean(precision_scores), 3)
+  recall_average = round(np.mean(recall_scores), 3)
+  f1_average = round(np.mean(f1_scores), 3)
+  print("Accuracy Macro-Average:", acc_average)
+  print("Precision Macro-Average:", prec_average)
+  print("Recall Macro-Average:", recall_average)
+  print("F1 Macro-Average:", f1_average)
