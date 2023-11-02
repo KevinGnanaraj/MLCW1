@@ -5,8 +5,6 @@
 ## Find Tree Algorithm
 
 
-
-
 ## Evaluation Metrics
 The evaluation function will take as inputs the true data as well as data that our trained model predicts.
 The first metric that is created is the confusion matrix, this matrix has prediction labels on the x axis and true labels on the y axis. It will then iterate over both the true and predicted data and fill out the confusion matrix.
@@ -17,3 +15,13 @@ Precision = TP / (TP + FP)
 Recall = TP / (TP + FN)
 F1 = 2 * (Precision * Recall) / (Precision + Recall)
 Once all the scores for each class has been taken, an average across all classes is returned as the final evaluation metrics for our model.
+
+
+## Running the code on a lab machine
+In the command line navigate to the folder containing main.py
+
+Run **source /vol/lab/intro2ml/venv/bin/activate** to start the venv
+
+Run **python3 main.py c** to run the code using the clean dataset
+
+Run **python3 main.py n** to run the code using the noisy dataset
