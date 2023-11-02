@@ -316,10 +316,8 @@ if __name__ == "__main__":
     print("F1 score:", f1)
 
     if i == 9:
-      print("Plotting...")
       plt.figure(figsize=(15, 5))
       tree.plot_decision_tree(tree.decision_tree)
-      print("Plot complete")
 
   acc_average = round(np.mean(accuracy_scores), 3)
   prec_average = round(np.mean(precision_scores), 3)
