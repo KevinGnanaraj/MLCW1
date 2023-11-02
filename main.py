@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from matplotlib import colors as matColours
+import sys
 
 class tree_node:
 
@@ -13,16 +14,28 @@ class tree_node:
 
 class decision_tree:
 
-  def __init__(self, dataset='clean'):
+  def __init__(self):
     self.decision_tree = tree_node()
 
-    if dataset == 'clean':
+    if sys.argv[1]:
+      if sys.argv[1] == 'c':
+        print("Using clean dataset")
+        self.data = np.loadtxt("wifi_db/clean_dataset.txt")
+      elif sys.argv[1] == 'n':
+        print("Using noisy dataset")
+        self.data = np.loadtxt("wifi_db/noisy_dataset.txt")
+      else:
+        sys.exit("Please enter a valid dataset option")
+    else:
+      print("Defaulting to using the clean dataset")
+      self.data = np.loadtxt("wifi_db/clean_dataset.txt")
+    """if dataset == 'clean':
       self.data = np.loadtxt("wifi_db/clean_dataset.txt")  # This loads the file into a 2000x8 array
     elif dataset == 'noisy':
       self.data = np.loadtxt("wifi_db/noisy_dataset.txt")
     else:
       print("Dataset name not recognised")
-      return 0
+      return 0"""
 
     if len(self.data) == 0:
       print("Why have you fed us an empty dataset??  :(")
@@ -283,7 +296,7 @@ if __name__ == "__main__":
   f1_scores = []
   for i in range(10):
     print("Starting loop " + str(i))
-    tree = decision_tree('clean')
+    tree = decision_tree()
     tree.train_test_split(i)
     tree.decision_tree, depth = tree.decision_tree_learning(tree.train_set, depth=0)
     tree.predict(tree.decision_tree)
