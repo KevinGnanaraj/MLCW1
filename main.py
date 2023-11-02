@@ -19,23 +19,13 @@ class decision_tree:
 
     if len(sys.argv) == 2:
       if sys.argv[1] == 'c':
-        print("Using clean dataset")
         self.data = np.loadtxt("wifi_db/clean_dataset.txt")
       elif sys.argv[1] == 'n':
-        print("Using noisy dataset")
         self.data = np.loadtxt("wifi_db/noisy_dataset.txt")
       else:
         sys.exit("Please enter a valid dataset option")
     else:
-      print("Defaulting to using the clean dataset")
       self.data = np.loadtxt("wifi_db/clean_dataset.txt")
-    """if dataset == 'clean':
-      self.data = np.loadtxt("wifi_db/clean_dataset.txt")  # This loads the file into a 2000x8 array
-    elif dataset == 'noisy':
-      self.data = np.loadtxt("wifi_db/noisy_dataset.txt")
-    else:
-      print("Dataset name not recognised")
-      return 0"""
 
     if len(self.data) == 0:
       print("Why have you fed us an empty dataset??  :(")
@@ -290,6 +280,16 @@ class decision_tree:
 
 
 if __name__ == "__main__":
+  if len(sys.argv) == 2:
+    if sys.argv[1] == 'c':
+      print("Using clean dataset")
+    elif sys.argv[1] == 'n':
+      print("Using noisy dataset")
+    else:
+      sys.exit("Please enter a valid dataset option")
+  else:
+    print("Defaulting to using the clean dataset")
+
   accuracy_scores = []
   precision_scores = []
   recall_scores = []
