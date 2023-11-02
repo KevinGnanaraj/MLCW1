@@ -237,10 +237,12 @@ class decision_tree:
 
   def confusion_matrix(self):
     matrix = np.zeros((4, 4), dtype="int")
+
     for i in range(len(self.test_set)):
       num_true = int(self.test_set[i][-1] - 1)
       num_predicted = int(self.predictions[i] - 1)
       matrix[num_true][num_predicted] += 1
+      
     return matrix
 
   def evaluation_metrics(self, matrix):
@@ -323,7 +325,7 @@ if __name__ == "__main__":
   prec_average = round(np.mean(precision_scores), 3)
   recall_average = round(np.mean(recall_scores), 3)
   f1_average = round(np.mean(f1_scores), 3)
-  
+
   print("Accuracy Macro-Average:", acc_average)
   print("Precision Macro-Average:", prec_average)
   print("Recall Macro-Average:", recall_average)
