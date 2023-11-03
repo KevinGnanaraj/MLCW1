@@ -6,8 +6,7 @@ The goal of this assignment is to implement a decision tree learning algorithm t
 
 ## Instructions for running the code on lab machines
 
-In the command line navigate to the folder containing `main.py`
-
+In the command line navigate to the folder containing `main.py`. This folder should also contain the folder called 'wifi_db' which will contain the clean and noisy datasets.
 Run the following to start the venv:
 
 ```
